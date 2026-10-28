@@ -121,4 +121,4 @@ class BukuController:
                 messagebox.showerror("Error", "Terjadi kesalahan saat menghapus data.")
 
     def run(self):
-        self.view.mainloop()
+        self.view.mainloop()-
