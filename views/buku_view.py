@@ -1,6 +1,10 @@
 import customtkinter as ctk
 from tkinter import ttk
 
+# Mengatur tema tampilan aplikasi menjadi warna putih (Light Mode)
+ctk.set_appearance_mode("Light")
+ctk.set_default_color_theme("blue")
+
 class BukuView(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -29,13 +33,13 @@ class BukuView(ctk.CTk):
         self.entry_tahun.pack(pady=8, padx=15, fill="x")
 
         # Tombol Aksi (Simpan, Update, Delete)
-        self.btn_simpan = ctk.CTkButton(self.frame_kiri, text="Simpan Data", fg_color="green")
+        self.btn_simpan = ctk.CTkButton(self.frame_kiri, text="Simpan Data", fg_color="green", hover_color="darkgreen")
         self.btn_simpan.pack(pady=10, padx=15, fill="x")
 
-        self.btn_update = ctk.CTkButton(self.frame_kiri, text="Perbarui Data (Update)", fg_color="blue")
+        self.btn_update = ctk.CTkButton(self.frame_kiri, text="Perbarui Data (Update)", fg_color="blue", hover_color="darkblue")
         self.btn_update.pack(pady=5, padx=15, fill="x")
 
-        self.btn_delete = ctk.CTkButton(self.frame_kiri, text="Hapus Data (Delete)", fg_color="red")
+        self.btn_delete = ctk.CTkButton(self.frame_kiri, text="Hapus Data (Delete)", fg_color="red", hover_color="darkred")
         self.btn_delete.pack(pady=5, padx=15, fill="x")
 
         # FRAME KANAN: TABEL DAFTAR BUKU
