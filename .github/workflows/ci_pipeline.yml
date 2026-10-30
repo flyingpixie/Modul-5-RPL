@@ -34,6 +34,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 4. Menjalankan Automated Unit Testing (Pytest)
+      - name: 4. Membuat Tabel Database (Inisialisasi Schema)
+        run: |
+          python -c "
+          import mysql.connector
+          db = mysql.connector.connect(
+              host='localhost',
+              user='root',
+              password='',
+              database='perpustakaan'
+          )
+          cursor = db.cursor()
+          cursor.execute('''
+              CREATE TABLE IF NOT EXISTS buku (
+                  id INT AUTO_INCREMENT PRIMARY KEY,
+                  judul VARCHAR(255) NOT NULL,
+                  penulis VARCHAR(255) NOT NULL,
+                  tahun_terbit INT NOT NULL
+              )
+          ''')
+          db.commit()
+          db.close()
+          "
+
+      - name: 5. Menjalankan Automated Unit Testing (Pytest)
         run: |
           python -m pytest -v
