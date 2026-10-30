@@ -1,8 +1,14 @@
-class BukuModel:
-    def __init__(self, db_connection):
-        self.db = db_connection
+from config.database import Database
 
-    def get_semua_buku(self):
+class BukuModel:
+    def __init__(self, db_connection=None):
+        if db_connection is None:
+            db_instance = Database()
+            self.db = db_instance.get_connection()  # Memanggil method get_connection() dari class Database
+        else:
+            self.db = db_connection
+
+    def get_all_buku(self):
         cursor = self.db.cursor(dictionary=True)
         cursor.execute("SELECT * FROM buku")
         result = cursor.fetchall()
