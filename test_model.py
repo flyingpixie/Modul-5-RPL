@@ -1,5 +1,5 @@
 import mysql.connector
-from buku_model import BukuModel
+from models.buku_model import BukuModel
 from models.anggota_model import AnggotaModel
 
 # Koneksi ke database MySQL Laragon

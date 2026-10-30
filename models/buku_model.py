@@ -4,9 +4,10 @@ class BukuModel:
     def __init__(self, db_connection=None):
         if db_connection is None:
             db_instance = Database()
-            self.db = db_instance.get_connection()  # Memanggil method get_connection() dari class Database
+            self.db = db_instance.get_connection() # Memanggil method get_connection() dari class Database
         else:
             self.db = db_connection
+        self.table_name = "buku"
 
     def get_all_buku(self):
         cursor = self.db.cursor(dictionary=True)
@@ -14,6 +15,10 @@ class BukuModel:
         result = cursor.fetchall()
         cursor.close()
         return result
+
+    def get_semua_buku(self):
+        # Alias atau fungsi tambahan agar kompatibel dengan pemanggilan test_model.py
+        return self.get_all_buku()
 
     def tambah_buku(self, judul, penulis, tahun_terbit):
         cursor = self.db.cursor()

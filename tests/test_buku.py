@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock
-from buku_model import BukuModel
+from models.buku_model import BukuModel
 
 def test_create_buku_berhasil():
     # Menginisialisasi Model dengan memberikan argumen mock koneksi
