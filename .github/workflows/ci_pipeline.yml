@@ -10,16 +10,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-          MYSQL_DATABASE: "perpustakaan"
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=5s --health-timeout=2s --health-retries=3
-
     steps:
       - name: 1. Mengambil Kode dari Repositori (Checkout)
         uses: actions/checkout@v4
@@ -34,29 +24,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 4. Membuat Tabel Database (Inisialisasi Schema)
+      - name: 3.5. Menjalankan Linter Flake8
         run: |
-          python -c "
-          import mysql.connector
-          db = mysql.connector.connect(
-              host='localhost',
-              user='root',
-              password='',
-              database='perpustakaan'
-          )
-          cursor = db.cursor()
-          cursor.execute('''
-              CREATE TABLE IF NOT EXISTS buku (
-                  id_buku INT AUTO_INCREMENT PRIMARY KEY,
-                  judul VARCHAR(255) NOT NULL,
-                  penulis VARCHAR(255) NOT NULL,
-                  tahun_terbit INT NOT NULL
-              )
-          ''')
-          db.commit()
-          db.close()
-          "
+          flake8 models/ controllers/ --count --select=E9,F63,F7,F82 --show-source --statistics
 
-      - name: 5. Menjalankan Automated Unit Testing (Pytest)
+      - name: 4. Menjalankan Automated Unit Testing (Pytest)
         run: |
           python -m pytest -v

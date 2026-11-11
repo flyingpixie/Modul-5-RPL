@@ -9,14 +9,15 @@ class BukuView(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Sistem Manajemen Perpustakaan")
-        self.geometry("800x500")
+        self.geometry("850x550")
+        self.resizable(False, False)
 
         # Konfigurasi Grid Utama
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=2)
         self.grid_rowconfigure(0, weight=1)
 
-        # FRAME KIRI: FORMULIR INPUT BUKU
+        # FRAME KIRI: FORMULIR INPUT BUKU & TOMBOL AKSI
         self.frame_kiri = ctk.CTkFrame(self)
         self.frame_kiri.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
@@ -42,15 +43,19 @@ class BukuView(ctk.CTk):
         self.btn_delete = ctk.CTkButton(self.frame_kiri, text="Hapus Data (Delete)", fg_color="red", hover_color="darkred")
         self.btn_delete.pack(pady=5, padx=15, fill="x")
 
+        # Tombol Logout (Menyesuaikan kebutuhan modul otorisasi & navigasi)
+        self.btn_logout = ctk.CTkButton(self.frame_kiri, text="Logout", fg_color="gray", hover_color="darkgray")
+        self.btn_logout.pack(pady=15, padx=15, fill="x")
+
         # FRAME KANAN: TABEL DAFTAR BUKU
         self.frame_kanan = ctk.CTkFrame(self)
         self.frame_kanan.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
         ctk.CTkLabel(self.frame_kanan, text="Daftar Koleksi Buku Triana.090", font=("Arial", 16, "bold")).pack(pady=15)
 
-        # Komponen Tabel
+        # Komponen Tabel (Treeview)
         kolom = ("id", "judul", "penulis", "tahun")
-        self.tabel = ttk.Treeview(self.frame_kanan, columns=kolom, show="headings", height=15)
+        self.tabel = ttk.Treeview(self.frame_kanan, columns=kolom, show="headings", height=18)
 
         self.tabel.heading("id", text="ID")
         self.tabel.heading("judul", text="Judul Buku")
@@ -58,8 +63,8 @@ class BukuView(ctk.CTk):
         self.tabel.heading("tahun", text="Tahun")
 
         self.tabel.column("id", width=40, anchor="center")
-        self.tabel.column("judul", width=150)
-        self.tabel.column("penulis", width=120)
+        self.tabel.column("judul", width=160)
+        self.tabel.column("penulis", width=130)
         self.tabel.column("tahun", width=60, anchor="center")
 
         self.tabel.pack(fill="both", expand=True, padx=15, pady=10)
