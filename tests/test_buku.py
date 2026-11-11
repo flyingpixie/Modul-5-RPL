@@ -5,9 +5,9 @@ def test_create_buku_berhasil():
     # 1. Buat mock untuk koneksi database
     mock_db = MagicMock()
     
-    # 2. Inisialisasi BukuModel dan set atribut koneksinya ke mock_db
+    # 2. Inisialisasi BukuModel dan set atribut self.db ke mock_db sesuai buku_model.py
     model = BukuModel()
-    model.conn = mock_db  # Sesuaikan jika nama atribut koneksi di buku_model Anda adalah 'conn' atau 'db'
+    model.db = mock_db  
     
     # 3. Buat mock untuk cursor
     mock_cursor = MagicMock()
