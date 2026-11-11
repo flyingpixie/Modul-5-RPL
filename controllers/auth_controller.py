@@ -3,6 +3,7 @@ from models.user_model import UserModel
 from views.login_view import LoginView
 from controllers.buku_controller import BukuController
 
+
 class AuthController:
     def __init__(self):
         self.model = UserModel()
@@ -10,20 +11,33 @@ class AuthController:
         self.view.btn_login.configure(command=self.proses_login)
 
     def proses_login(self):
-        username = self.view.entry_username.get()
+        username = self.view.entry_username.get().strip()
         password = self.view.entry_password.get()
 
         if not username or not password:
             messagebox.showwarning("Peringatan", "Username dan Password wajib diisi!")
             return
 
-        user = self.model.autentikasi(username, password)
+        try:
+            user = self.model.autentikasi(username, password)
+        except ConnectionError:
+            messagebox.showerror(
+                "Kesalahan Database",
+                "Tidak dapat terhubung ke database. Pastikan MySQL berjalan."
+            )
+            return
+        except Exception as e:
+            messagebox.showerror("Kesalahan", f"Terjadi kesalahan: {e}")
+            return
 
         if user:
-            messagebox.showinfo("Login Berhasil", f"Selamat datang, {user['username']} ({user['role']})!")
+            messagebox.showinfo(
+                "Login Berhasil",
+                f"Selamat datang, {user['username']} ({user['role']})!"
+            )
             # Tutup jendela Login
             self.view.destroy()
-            # Buka Jendela Utama Perpustakaan dengan mengirimkan role pengguna
+            # Buka jendela utama perpustakaan dengan mengirimkan role pengguna
             app_utama = BukuController(user_role=user['role'])
             app_utama.run()
         else:
